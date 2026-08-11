@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PWA Alumni — Strategic Planning Survey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1F3552;
+    --navy-ink:#152640;
+    --gold:#B08D2B;
+    --gold-light:#D9BE6E;
+    --cream:#F7F5F0;
+    --paper:#FFFFFF;
+    --ink:#22262B;
+    --muted:#6B7280;
+    --line:#DAD5C8;
+    --ok:#2E7D4F;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--navy);}
+
+  .letterhead{
+    background:var(--navy);
+    color:#fff;
+    padding:36px 24px 30px;
+    text-align:center;
+    border-bottom:4px solid var(--gold);
+  }
+  .letterhead .mark{
+    font-size:11px;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--gold-light);
+    margin-bottom:10px;
+  }
+  .letterhead h1{
+    font-family:'Source Serif 4',serif;
+    font-weight:700;
+    font-size:clamp(24px,4vw,34px);
+    margin:0 0 8px;
+  }
+  .letterhead p{
+    margin:0 auto;
+    color:#CBD5E1;
+    font-size:15px;
+    max-width:560px;
+  }
+
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px 80px;}
+
+  .intro{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-left:4px solid var(--gold);
+    padding:22px 24px;
+    margin-top:-1px;
+    margin-bottom:36px;
+    box-shadow:0 1px 2px rgba(0,0,0,0.03);
+  }
+  .intro h2{font-family:'Source Serif 4',serif;font-size:16px;margin:24px 0 8px;color:var(--navy);}
+  .intro h2:first-child{margin-top:0;}
+  .intro p{margin:0 0 4px;color:#3a3f47;font-size:14.5px;}
+  .intro .em{font-style:italic;color:var(--muted);}
+  .intro .time{
+    display:inline-block;margin-top:10px;font-size:13px;color:var(--navy);
+    background:#EFEAD9;padding:5px 12px;border-radius:20px;font-weight:600;
+  }
+
+  .respondent{background:var(--paper);border:1px solid var(--line);padding:20px 24px;margin-bottom:44px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:560px){.grid2{grid-template-columns:1fr;}}
+
+  .field{margin-bottom:16px;}
+  .field:last-child{margin-bottom:0;}
+  .field label{
+    display:block;font-size:12.5px;font-weight:600;letter-spacing:.03em;
+    text-transform:uppercase;color:var(--navy);margin-bottom:6px;
+  }
+  .field .optional{text-transform:none;font-weight:400;color:var(--muted);font-size:12px;letter-spacing:0;}
+  .field input[type=text],
+  .field input[type=number],
+  .field textarea,
+  .field select{
+    width:100%;font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);
+    background:#fff;border:1px solid #C9C4B4;border-radius:var(--radius);padding:10px 12px;resize:vertical;
+  }
+  .field textarea{min-height:78px;}
+  .field input:focus, .field textarea:focus, .field select:focus{
+    outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold);
+  }
+  .hint{font-size:13px;color:var(--muted);font-style:italic;margin:-2px 0 8px;}
+
+  .section{margin-bottom:52px;}
+  .section-head{
+    display:flex;align-items:baseline;gap:14px;margin-bottom:18px;
+    padding-bottom:10px;border-bottom:1px solid var(--line);
+  }
+  .section-num{
+    font-family:'Source Serif 4',serif;font-weight:700;font-size:14px;color:#fff;
+    background:var(--navy);padding:4px 10px;flex-shrink:0;
+  }
+  .section-head h2{font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:var(--navy);margin:0;}
+  .section-sub{font-size:14px;color:var(--muted);margin:-8px 0 20px;}
+
+  .qwrap{margin-bottom:22px;}
+  .qwrap .qtext{font-size:15px;font-weight:500;margin-bottom:4px;}
+  .qwrap .qtext .qn{color:var(--gold);font-weight:700;margin-right:4px;}
+
+  .scale{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+  .scale label{
+    flex:1;min-width:56px;text-align:center;border:1px solid #C9C4B4;border-radius:2px;
+    padding:10px 4px;cursor:pointer;font-size:13px;color:#3a3f47;background:#fff;
+  }
+  .scale input{display:none;}
+  .scale input:checked + span{color:#fff;}
+  .scale label:has(input:checked){background:var(--navy);border-color:var(--navy);color:#fff;}
+  .scale-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:4px;}
+
+  .radiorow, .checkrow{display:flex;gap:16px;flex-wrap:wrap;padding:6px 0 4px;}
+  .radiorow label, .checkrow label{
+    display:flex;align-items:center;gap:6px;font-size:14.5px;font-weight:400;
+    text-transform:none;color:var(--ink);letter-spacing:0;
+  }
+  .radiorow input, .checkrow input{margin:0;}
+  .checkcol{display:flex;flex-direction:column;gap:10px;padding:6px 0 4px;}
+  .checkcol label{display:flex;align-items:center;gap:8px;font-weight:400;text-transform:none;color:var(--ink);letter-spacing:0;font-size:14.5px;}
+
+  .submit-block{background:var(--navy);color:#fff;padding:32px 26px;text-align:center;margin-top:56px;}
+  .submit-block h2{font-family:'Source Serif 4',serif;font-size:20px;margin:0 0 10px;}
+  .submit-block p{color:#CBD5E1;font-size:14.5px;max-width:480px;margin:0 auto 22px;}
+  .submit-btn{
+    background:var(--gold);color:#1a1408;border:none;font-weight:700;font-size:15px;
+    padding:14px 34px;border-radius:2px;cursor:pointer;letter-spacing:.02em;
+  }
+  .submit-btn:hover{background:var(--gold-light);}
+  .submit-btn:disabled{opacity:.7;cursor:default;}
+  .submitting-msg{display:none;color:var(--gold-light);font-size:13.5px;margin-top:14px;}
+  .submitting-msg.show{display:block;}
+
+  .result{display:none;background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--ok);padding:26px;margin-top:24px;}
+  .result.show{display:block;}
+  .result h3{font-family:'Source Serif 4',serif;color:var(--navy);margin:0 0 10px;font-size:18px;}
+  .result p{font-size:14.5px;color:#3a3f47;margin:0 0 18px;}
+  .result-actions{display:flex;gap:12px;flex-wrap:wrap;}
+  .result-actions button, .result-actions a{
+    font-weight:600;font-size:14px;padding:11px 20px;border-radius:2px;cursor:pointer;
+    text-decoration:none;display:inline-block;font-family:'Inter',sans-serif;
+  }
+  .btn-secondary{background:transparent;color:var(--navy);border:1.5px solid var(--navy);}
+  .btn-secondary:hover{background:#EFEAD9;}
+  .copied-msg{font-size:13px;color:var(--ok);margin-top:10px;display:none;}
+  .copied-msg.show{display:inline-block;}
+  .fallback-msg{font-size:13px;color:var(--muted);margin:16px 0 0;}
+  .fallback-msg a{color:var(--navy);}
+
+  .missing-msg{display:none;background:#FBEAEA;border:1px solid #E0A9A9;color:#8A2E2E;padding:12px 16px;font-size:14px;margin-bottom:20px;}
+  .missing-msg.show{display:block;}
+
+  footer{text-align:center;font-size:12.5px;color:var(--muted);padding:30px 20px 10px;}
+</style>
+</head>
+<body>
+
+<div class="letterhead">
+  <div class="mark">Pacific West Academy · Alumni</div>
+  <h1>Help Shape Where PWA Goes Next</h1>
+  <p>A short survey from the Institutional Director to inform PWA's first formal strategic plan.</p>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <h2>Why we're asking</h2>
+    <p>PWA is building its first formal strategic plan, and no one has a better read on whether the training actually held up in the field than the people who've been through it. Your experience since graduating — what prepared you, what didn't, and what the field actually demands — will directly shape our goals for curriculum, certification support, and future programs.</p>
+    <h2>A note on answering</h2>
+    <p class="em">Be candid. Critical feedback is at least as useful as praise — we're trying to see the program clearly, not collect compliments.</p>
+    <span class="time">Takes about 8–10 minutes</span>
+  </div>
+
+  <form id="qform">
+
+    <div class="respondent">
+      <div class="grid2">
+        <div class="field">
+          <label>Name <span class="optional">(optional — leave blank to answer anonymously)</span></label>
+          <input type="text" name="Name">
+        </div>
+        <div class="field">
+          <label>Program Completed</label>
+          <input type="text" name="Program" placeholder="e.g., CESS">
+        </div>
+        <div class="field">
+          <label>Campus Attended</label>
+          <select name="Campus">
+            <option value="">— Select —</option>
+            <option>Van Nuys</option>
+            <option>San Diego</option>
+            <option>Not sure / Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Year You Completed the Program</label>
+          <input type="text" name="Grad Year" placeholder="e.g., 2023">
+        </div>
+        <div class="field">
+          <label>Military/Veteran Background <span class="optional">(optional)</span></label>
+          <select name="Veteran Background">
+            <option value="">— Prefer not to say —</option>
+            <option>Veteran / active military</option>
+            <option>Civilian, no military background</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Current Employer/Role <span class="optional">(optional)</span></label>
+          <input type="text" name="Current Role">
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <span class="section-num">Part 1</span>
+        <h2>Your PWA Experience</h2>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">1.</span> Overall, how would you rate your training experience at PWA?</p>
+        <div class="scale" id="scale-overall">
+          <label><input type="radio" name="Overall Rating" value="1"><span>1</span></label>
+          <label><input type="radio" name="Overall Rating" value="2"><span>2</span></label>
+          <label><input type="radio" name="Overall Rating" value="3"><span>3</span></label>
+          <label><input type="radio" name="Overall Rating" value="4"><span>4</span></label>
+          <label><input type="radio" name="Overall Rating" value="5"><span>5</span></label>
+        </div>
+        <div class="scale-labels"><span>Poor</span><span>Excellent</span></div>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">2.</span> What part of the program was most valuable to your career?</p>
+        <textarea name="Most valuable part" rows="3"></textarea>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">3.</span> What would you change or improve about the curriculum or instruction?</p>
+        <textarea name="What to improve" rows="3"></textarea>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">4.</span> Did the program adequately prepare you for ASIS certification or other industry requirements you've pursued?</p>
+        <div class="radiorow">
+          <label><input type="radio" name="ASIS prep" value="Yes, fully"> Yes, fully</label>
+          <label><input type="radio" name="ASIS prep" value="Partially"> Partially</label>
+          <label><input type="radio" name="ASIS prep" value="Not really"> Not really</label>
+          <label><input type="radio" name="ASIS prep" value="N/A - haven't pursued certification"> N/A</label>
+        </div>
+        <textarea name="ASIS prep detail" rows="2" placeholder="Optional — say more if helpful"></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <span class="section-num">Part 2</span>
+        <h2>Career Outcomes</h2>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">1.</span> What's your current employment status?</p>
+        <select name="Employment status">
+          <option value="">— Select —</option>
+          <option>Working in executive protection/security field</option>
+          <option>Working in a related field</option>
+          <option>Working outside the field</option>
+          <option>Currently seeking work in the field</option>
+          <option>Still in school / further training</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">2.</span> If you found relevant work in the field, about how long did it take after completing PWA?</p>
+        <select name="Time to employment">
+          <option value="">— Select —</option>
+          <option>Already had work lined up</option>
+          <option>Under 1 month</option>
+          <option>1–3 months</option>
+          <option>4–6 months</option>
+          <option>More than 6 months</option>
+          <option>N/A</option>
+        </select>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">3.</span> Which certifications or credentials have you pursued since graduating, if any?</p>
+        <textarea name="Certifications pursued" rows="2"></textarea>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">4.</span> Looking back, what skills or knowledge do you wish had been covered more, based on what the job actually demands?</p>
+        <textarea name="Skills gap" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <span class="section-num">Part 3</span>
+        <h2>Looking Forward</h2>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">1.</span> Are there new programs, certifications, or specializations PWA should consider offering?</p>
+        <textarea name="New program ideas" rows="3"></textarea>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">2.</span> Is there a gap between what employers in this field are looking for and what PWA currently teaches?</p>
+        <textarea name="Employer gap" rows="3"></textarea>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">3.</span> Would you be interested in staying involved with PWA in any of these ways?</p>
+        <div class="checkcol">
+          <label><input type="checkbox" name="involve_speaker" value="Guest speaker"> Guest speaker for current students</label>
+          <label><input type="checkbox" name="involve_mentor" value="Mentor"> Mentor for current students</label>
+          <label><input type="checkbox" name="involve_employer" value="Employer partner"> Employer partner / hiring referrals</label>
+          <label><input type="checkbox" name="involve_advisory" value="Advisory board"> Advisory board member</label>
+          <label><input type="checkbox" name="involve_events" value="Alumni events"> Alumni events / networking</label>
+          <label><input type="checkbox" name="involve_none" value="Not right now"> Not right now</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <span class="section-num">Part 4</span>
+        <h2>Recommendation &amp; Final Thoughts</h2>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">1.</span> How likely are you to recommend PWA to a friend or colleague considering this field?</p>
+        <div class="scale" id="scale-nps">
+          <label><input type="radio" name="NPS" value="0"><span>0</span></label>
+          <label><input type="radio" name="NPS" value="1"><span>1</span></label>
+          <label><input type="radio" name="NPS" value="2"><span>2</span></label>
+          <label><input type="radio" name="NPS" value="3"><span>3</span></label>
+          <label><input type="radio" name="NPS" value="4"><span>4</span></label>
+          <label><input type="radio" name="NPS" value="5"><span>5</span></label>
+          <label><input type="radio" name="NPS" value="6"><span>6</span></label>
+          <label><input type="radio" name="NPS" value="7"><span>7</span></label>
+          <label><input type="radio" name="NPS" value="8"><span>8</span></label>
+          <label><input type="radio" name="NPS" value="9"><span>9</span></label>
+          <label><input type="radio" name="NPS" value="10"><span>10</span></label>
+        </div>
+        <div class="scale-labels"><span>Not at all likely</span><span>Extremely likely</span></div>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">2.</span> May we feature your feedback in PWA materials (with your name, or anonymized)?</p>
+        <div class="radiorow">
+          <label><input type="radio" name="Feature permission" value="Yes, with my name"> Yes, with my name</label>
+          <label><input type="radio" name="Feature permission" value="Yes, anonymized only"> Yes, anonymized only</label>
+          <label><input type="radio" name="Feature permission" value="No"> No</label>
+        </div>
+      </div>
+
+      <div class="qwrap">
+        <p class="qtext"><span class="qn">3.</span> Anything else you'd like the institution to know as it plans for the future?</p>
+        <textarea name="Final thoughts" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="missing-msg" id="missing-msg">Please select an overall rating (Part 1, Question 1) before submitting.</div>
+
+    <div class="submit-block">
+      <h2>Submit your response</h2>
+      <p>Your answers go straight into PWA's planning records — no need to email anything.</p>
+      <button type="button" class="submit-btn" id="build-summary">Submit my response</button>
+      <div class="submitting-msg" id="submitting-msg">Submitting…</div>
+    </div>
+
+    <div class="result" id="result">
+      <h3 id="result-heading">Response submitted</h3>
+      <p id="result-sub">Thank you for taking the time — this genuinely shapes what comes next.</p>
+      <div class="result-actions">
+        <button type="button" class="btn-secondary" id="copy-btn">Copy to clipboard</button>
+        <button type="button" class="btn-secondary" id="download-btn">Download as text file</button>
+      </div>
+      <div class="copied-msg" id="copied-msg">Copied to clipboard.</div>
+      <p class="fallback-msg">Trouble submitting? <a href="#" id="email-btn">Email your response instead</a>.</p>
+    </div>
+
+  </form>
+</div>
+
+<footer>Pacific West Academy — Strategic Planning · Thank you for being part of PWA's story.</footer>
+
+<script>
+  // ---- Update these two before publishing ----
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvQqE4NeQj1iZMmhI1CfO_bg81k3cO10V46AEgU6mYIjh7yuAfSwl2GUbsu_Cs6vpKdg/exec";
+  const RECIPIENT_EMAIL = "roxana.t@pwa.edu";
+
+  function val(form, name){
+    const el = form.querySelector(`[name="${name}"]`);
+    return el ? el.value.trim() : "";
+  }
+  function radioVal(form, name){
+    const el = form.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : "";
+  }
+  function checkedList(form, names){
+    return names
+      .map(n => form.querySelector(`[name="${n}"]`))
+      .filter(el => el && el.checked)
+      .map(el => el.value);
+  }
+
+  function buildSummary(){
+    const form = document.getElementById('qform');
+    const name = val(form, "Name") || "(anonymous)";
+    const involveNames = ["involve_speaker","involve_mentor","involve_employer","involve_advisory","involve_events","involve_none"];
+    const involvement = checkedList(form, involveNames).join(", ") || "(none selected)";
+
+    const fields = {
+      name: val(form, "Name"),
+      program: val(form, "Program"),
+      campus: val(form, "Campus"),
+      gradYear: val(form, "Grad Year"),
+      veteranBackground: val(form, "Veteran Background"),
+      currentRole: val(form, "Current Role"),
+      overallRating: radioVal(form, "Overall Rating"),
+      mostValuable: val(form, "Most valuable part"),
+      whatToImprove: val(form, "What to improve"),
+      asisPrep: radioVal(form, "ASIS prep"),
+      asisPrepDetail: val(form, "ASIS prep detail"),
+      employmentStatus: val(form, "Employment status"),
+      timeToEmployment: val(form, "Time to employment"),
+      certifications: val(form, "Certifications pursued"),
+      skillsGap: val(form, "Skills gap"),
+      newProgramIdeas: val(form, "New program ideas"),
+      employerGap: val(form, "Employer gap"),
+      involvement: involvement,
+      nps: radioVal(form, "NPS"),
+      featurePermission: radioVal(form, "Feature permission"),
+      finalThoughts: val(form, "Final thoughts"),
+    };
+
+    const out = [];
+    out.push("PWA ALUMNI STRATEGIC PLANNING SURVEY");
+    out.push("=".repeat(40));
+    out.push(`Name: ${fields.name || "(anonymous)"}`);
+    out.push(`Program: ${fields.program}`);
+    out.push(`Campus: ${fields.campus}`);
+    out.push(`Grad Year: ${fields.gradYear}`);
+    out.push(`Veteran/Military Background: ${fields.veteranBackground}`);
+    out.push(`Current Role: ${fields.currentRole}`);
+    out.push("");
+    out.push("PART 1 — YOUR PWA EXPERIENCE");
+    out.push("-".repeat(30));
+    out.push(`Overall rating (1-5): ${fields.overallRating || "(no answer)"}`);
+    out.push(`Most valuable part: ${fields.mostValuable || "(no answer)"}`);
+    out.push(`What to improve: ${fields.whatToImprove || "(no answer)"}`);
+    out.push(`ASIS/certification prep: ${fields.asisPrep || "(no answer)"} ${fields.asisPrepDetail ? "— " + fields.asisPrepDetail : ""}`);
+    out.push("");
+    out.push("PART 2 — CAREER OUTCOMES");
+    out.push("-".repeat(30));
+    out.push(`Employment status: ${fields.employmentStatus || "(no answer)"}`);
+    out.push(`Time to employment: ${fields.timeToEmployment || "(no answer)"}`);
+    out.push(`Certifications pursued: ${fields.certifications || "(no answer)"}`);
+    out.push(`Skills gap: ${fields.skillsGap || "(no answer)"}`);
+    out.push("");
+    out.push("PART 3 — LOOKING FORWARD");
+    out.push("-".repeat(30));
+    out.push(`New program ideas: ${fields.newProgramIdeas || "(no answer)"}`);
+    out.push(`Employer gap: ${fields.employerGap || "(no answer)"}`);
+    out.push(`Willing to be involved as: ${fields.involvement}`);
+    out.push("");
+    out.push("PART 4 — RECOMMENDATION & FINAL THOUGHTS");
+    out.push("-".repeat(30));
+    out.push(`Likelihood to recommend (0-10): ${fields.nps || "(no answer)"}`);
+    out.push(`May feature feedback: ${fields.featurePermission || "(no answer)"}`);
+    out.push(`Final thoughts: ${fields.finalThoughts || "(no answer)"}`);
+    out.push("");
+
+    return { name, text: out.join("\n"), payload: fields };
+  }
+
+  document.getElementById('build-summary').addEventListener('click', () => {
+    const { name, text, payload } = buildSummary();
+    const missingMsg = document.getElementById('missing-msg');
+    if(!payload.overallRating){
+      missingMsg.classList.add('show');
+      document.getElementById('scale-overall').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    missingMsg.classList.remove('show');
+
+    const submitBtn = document.getElementById('build-summary');
+    const submittingMsg = document.getElementById('submitting-msg');
+    submitBtn.disabled = true;
+    submittingMsg.classList.add('show');
+
+    const displayName = name || "Alumni";
+    const subject = encodeURIComponent(`PWA Alumni Survey — ${displayName}`);
+    const body = encodeURIComponent(text);
+    document.getElementById('email-btn').href = `mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${body}`;
+
+    document.getElementById('copy-btn').onclick = () => {
+      navigator.clipboard.writeText(text).then(() => {
+        const msg = document.getElementById('copied-msg');
+        msg.classList.add('show');
+        setTimeout(() => msg.classList.remove('show'), 2500);
+      });
+    };
+
+    document.getElementById('download-btn').onclick = () => {
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `PWA_Alumni_Survey_${displayName.replace(/\s+/g,'_')}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+
+    const showResult = (submitted) => {
+      submittingMsg.classList.remove('show');
+      submitBtn.textContent = submitted ? "Response submitted" : "Submit my response";
+      submitBtn.disabled = !!submitted;
+      const result = document.getElementById('result');
+      result.classList.add('show');
+      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    if (SCRIPT_URL.indexOf("PASTE_YOUR") === 0) {
+      document.getElementById('result-heading').textContent = "Dashboard not yet connected";
+      document.getElementById('result-sub').textContent = "This form hasn't been connected to a dashboard yet. Use one of the options below to get your answers to the Institutional Director.";
+      showResult(false);
+      return;
+    }
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+    }).then(() => showResult(true)).catch(() => {
+      document.getElementById('result-heading').textContent = "Couldn't confirm submission";
+      document.getElementById('result-sub').textContent = "Your response may not have gone through. Please use the email or download option below as a backup.";
+      showResult(false);
+    });
+  });
+</script>
+
+</body>
+</html>
